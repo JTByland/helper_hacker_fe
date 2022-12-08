@@ -2,10 +2,14 @@ import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { useUserContext } from "../context/user_context";
+import { useEffect } from "react";
 
 const CreateTeam = () => {
-  const { user } = useUserContext();
+  const { user, createGroup } = useUserContext();
   console.log(user);
+  useEffect(() => {
+    console.log(user);
+  });
   return (
     <div>
       <Card
@@ -22,7 +26,7 @@ const CreateTeam = () => {
           <Form>
             <Form.Group className="mb-3">
               <Form.Label>Group Name</Form.Label>
-              <Form.Control type="email" placeholder="Hub Team 12" />
+              <Form.Control placeholder="Hub Team 12" />
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Number of Members</Form.Label>
