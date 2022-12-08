@@ -7,13 +7,13 @@ import { useUserContext } from "../context/user_context";
 import { useEffect } from "react";
 
 const CreateTeam = () => {
-  const { group, createGroup } = useUserContext({
+  const { group, setGroup } = useUserContext({
     name: "",
     section: "",
     professor: "",
   });
   const handleChange = (e) => {
-    setValues({ ...values, [e.target.name]: e.target.value });
+    setGroup({ ...values, [e.target.name]: e.target.value });
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,9 +22,9 @@ const CreateTeam = () => {
     const { name, section, professor } = group;
     try {
       const { data } = await axios.post(`${DEV_URL}`, loginUser);
-      setValues({ name: "", email: "", password: "" });
+      setGroup({ name: "", section: "", professor: "" });
       showAlert({
-        text: `Welcome, ${data.user.name}. Redirecting to dashboard...`,
+        text: `Sucessfully create a group`,
         type: "success",
       });
       setLoading(false);
@@ -42,9 +42,9 @@ const CreateTeam = () => {
   };
   return (
     <Wrapper>
-      {/* {alert.show && (
-      <div className={`alert alert-${alert.type}`}>{alert.text}</div>
-    )} */}
+      {alert.show && (
+        <div className={`alert alert-${alert.type}`}>{alert.text}</div>
+      )}
       <form className="container-lg " onSubmit={handleSubmit}>
         <h3 className="text-center">Login</h3>
         <div className="mb-3">
