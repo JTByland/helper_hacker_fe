@@ -25,7 +25,7 @@ const Register = () => {
     const { email, password, name } = values;
     const registerUser = { email, password, name };
     try {
-      const { data } = await axios.post(`${DEV_URL}`, registerUser);
+      const { data } = await axios.post(`${PROD_URL}`, registerUser);
       setValues({ name: "", email: "", password: "" });
       showAlert({
         text: `Please check your email to verify your account`,
