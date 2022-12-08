@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { useUserContext } from "../context/user_context";
 import useLocalState from "../utils/localState";
 import { useNavigate, Link } from "react-router-dom";
-import { MAIN_ROOT, PROD_ROOT } from "../url";
+import { PROD_ROOT } from "../url";
 const Login = () => {
   const DEV_URL = "/api/v1/auth/login";
   const PROD_URL = `${PROD_ROOT}${DEV_URL}`;
