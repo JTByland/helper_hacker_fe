@@ -1,8 +1,11 @@
 import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import { useUserContext } from "../context/user_context";
 
 const CreateTeam = () => {
+  const { user } = useUserContext();
+  console.log(user);
   return (
     <div>
       <Card
