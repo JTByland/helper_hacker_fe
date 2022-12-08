@@ -7,13 +7,13 @@ import { useUserContext } from "../context/user_context";
 import { useEffect } from "react";
 
 const CreateTeam = () => {
-  const { user, createGroup } = useUserContext();
-  console.log(user);
-  useEffect(() => {
-    console.log(user);
+  const { group, createGroup } = useUserContext({
+    name: "",
+    section: "",
+    professor: "",
   });
   const handleChange = (e) => {
-    // setValues({ ...values, [e.target.name]: e.target.value });
+    setValues({ ...values, [e.target.name]: e.target.value });
   };
   const handleSubmit = async (e) => {
     // e.preventDefault();
@@ -43,77 +43,49 @@ const CreateTeam = () => {
   };
   return (
     <Wrapper>
-    {/* {alert.show && (
+      {/* {alert.show && (
       <div className={`alert alert-${alert.type}`}>{alert.text}</div>
     )} */}
-    <form className="container-lg " onSubmit={handleSubmit}>
-      <h3 className="text-center">Login</h3>
-      <div className="mb-3">
-        <label>Group Name</label>
-        <input
-          type="text"
-          name="group"
-          // value={values.email}
-          onChange={handleChange}
-          className="form-control"
-          placeholder="Enter group name"
-        />
-      </div>
-      <div className="mb-3">
-        <label>Number of Members</label>
-        <input
-          type="text"
-          name="number_of_members"
-          // value={values.password}
-          onChange={handleChange}
-          className="form-control"
-          placeholder="Enter number of members"
-        />
-      </div>
-      <div className="mb-3">
-        <label>Class Section</label>
-        <input
-          type="text"
-          name="section"
-          // value={values.password}
-          onChange={handleChange}
-          className="form-control"
-          placeholder="Enter section"
-        />
-      </div>
-      <div className="mb-3">
-        <label>Professor Name (optional)</label>
-        <input
-          type="text"
-          name="professor"
-          // value={values.password}
-          onChange={handleChange}
-          className="form-control"
-          placeholder="Enter professor name"
-        />
-      </div>
-      <div className="mb-3">
-        <label>Supervisor Name (optional)</label>
-        <input
-          type="text"
-          name="supervisor"
-          // value={values.password}
-          onChange={handleChange}
-          className="form-control"
-          placeholder="Enter supervisor"
-        />
-      </div>
-      <div className="d-grid">
-        <Button>Submit</Button>
-      </div>
-      <p className="forgot-password text-right">
-        Don't have an account ?{" "}
-        <span>
-          <Link to="/register">Register</Link>
-        </span>
-      </p>
-    </form>
-  </Wrapper>
+      <form className="container-lg " onSubmit={handleSubmit}>
+        <h3 className="text-center">Login</h3>
+        <div className="mb-3">
+          <label>Group Name</label>
+          <input
+            type="text"
+            name="name"
+            value={values.name}
+            onChange={handleChange}
+            className="form-control"
+            placeholder="Enter group name"
+          />
+        </div>
+        <div className="mb-3">
+          <label>Class Section</label>
+          <input
+            type="text"
+            name="section"
+            value={values.section}
+            onChange={handleChange}
+            className="form-control"
+            placeholder="Enter section"
+          />
+        </div>
+        <div className="mb-3">
+          <label>Professor Name (optional)</label>
+          <input
+            type="text"
+            name="professor"
+            value={values.professor}
+            onChange={handleChange}
+            className="form-control"
+            placeholder="Enter professor name"
+          />
+        </div>
+        <div className="d-grid">
+          <Button>Submit</Button>
+        </div>
+      </form>
+    </Wrapper>
     // <div>
     //   <Card
     //     style={{

@@ -22,6 +22,13 @@ export const UserProvider = ({ children }) => {
       console.log(e);
     }
   };
+  const joinGroup = async (code) => {
+    try {
+      const { data } = await axios.post(`${GROUP_ENDPOINT}/joibs`, code);
+    } catch (e) {
+      console.log(e);
+    }
+  };
   const saveUser = (user) => {
     setUser(user);
   };
@@ -62,6 +69,7 @@ export const UserProvider = ({ children }) => {
         resetPassword,
         activeAccount,
         createGroup,
+        joinGroup,
       }}
     >
       {children}
