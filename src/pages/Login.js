@@ -7,7 +7,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { PROD_ROOT } from "../url";
 const Login = () => {
   const DEV_URL = "/api/v1/auth/login";
-  const PROD_URL = `${PROD_ROOT}${DEV_URL}`;
+  const PROD_USER_URL = `${PROD_ROOT}${DEV_URL}`;
   var numberOfGroups = 1;
   const navigate = useNavigate();
 

@@ -5,13 +5,44 @@ const UserContext = React.createContext();
 export const UserProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
   const DEV_URL = "/api/v1/auth";
+  const GROUP_URL = "/api/v1/groups";
+  const POST_URL = "/api/v1/posts";
   const [user, setUser] = useState(null);
-  const [groups, setGroups] = useState({
-    data: {},
-    nb_groups: 0,
-  });
+  const [groups, setGroups] = useState(null);
+  const [posts, setPosts] = useState(null);
+  // Post
+  const savePost = (posts) => {
+    setPosts(posts);
+  };
+  const getPostByGroupName = async (group_name) => {
+    try {
+      const { data } = await axios.post(`${PROD_ROOT}${POST_URL}/getPostName`, {
+        group_name,
+      });
+      savePost(data.posts);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  const getAllPosts = async () => {
+    try {
+      const { data } = await axios.get(`${PROD_ROOT}${POST_URL}`);
+      savePost(data.posts);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  // Groups
   const saveGroup = (group) => {
     setGroups(group);
+  };
+  const getAllGroups = async () => {
+    try {
+      const { data } = await axios.get(`${PROD_ROOT}${GROUP_URL}`);
+      saveGroup(data.groups);
+    } catch (e) {
+      console.log(e);
+    }
   };
   const saveUser = (user) => {
     setUser(user);
@@ -21,7 +52,7 @@ export const UserProvider = ({ children }) => {
   };
   const logout = async () => {
     try {
-      await axios.delete(`${DEV_URL}/logout`);
+      await axios.delete(`${PROD_ROOT}${DEV_URL}/logout`);
       removeUser();
     } catch (error) {
       console.log(error);
@@ -33,7 +64,7 @@ export const UserProvider = ({ children }) => {
 
   const fetchUser = async () => {
     try {
-      const { data } = await axios.get(`/api/v1/users/showMe`);
+      const { data } = await axios.get(`${PROD_ROOT}/api/v1/users/showMe`);
       saveUser(data.user);
     } catch (error) {
       removeUser();
@@ -52,7 +83,11 @@ export const UserProvider = ({ children }) => {
         forgotPassword,
         resetPassword,
         activeAccount,
-        saveGroup,
+        getAllGroups,
+        getAllPosts,
+        groups,
+        getPostByGroupName,
+        posts,
       }}
     >
       {children}

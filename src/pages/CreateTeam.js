@@ -1,13 +1,10 @@
 import axios from "axios";
 import styled from "styled-components";
 import useLocalState from "../utils/localState";
-import { useUserContext } from "../context/user_context";
 import { PROD_ROOT } from "../url";
 import { useState } from "react";
 const CreateTeam = () => {
-  const GROUP_URL = "/api/v1/group";
-  const GROUP_ENDPOINT = `${PROD_ROOT}${GROUP_URL}`;
-  const { group, saveGroup } = useUserContext();
+  const GROUP_URL = "/api/v1/groups";
   const { alert, showAlert, loading, setLoading, hideAlert } = useLocalState();
   const [values, setValues] = useState({
     name: "",
@@ -22,14 +19,13 @@ const CreateTeam = () => {
     hideAlert();
     setLoading(true);
     try {
-      const { data } = await axios.post(`${GROUP_ENDPOINT}`, values);
+      await axios.post(`${PROD_ROOT}${GROUP_URL}`, values);
       setValues({ name: "", section: "", professor: "" });
       showAlert({
         text: `Sucessfully create a group`,
         type: "success",
       });
       setLoading(false);
-      saveGroup(data.group);
     } catch (error) {
       showAlert({ text: error.response.data.msg });
       setLoading(false);

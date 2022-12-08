@@ -1,56 +1,67 @@
 import styled from "styled-components";
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Collapsible from 'react-collapsible';
-import './styles.css';
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Collapsible from "react-collapsible";
+import useLocalState from "../utils/localState";
+import axios from "axios";
+import "./styles.css";
+import { useState } from "react";
+import { useUserContext } from "../context/user_context";
 
-const PostBox = ({
-    
-}) => {
+const PostBox = ({ group_name }) => {
+  console.log(group_name);
+  const POST_URL = "/api/v1/posts";
+  const { user } = useUserContext();
+  // Create a post method
+  const [content, setContent] = useState("");
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const { data } = await axios.post(`${POST_URL}`, {
+        content,
+        author: user.name,
+        group_name,
+      });
+      setContent("");
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  return (
+    <div className="mt-3">
+      <Collapsible trigger="+">
+        <Wrapper>
+          <form onSubmit={handleSubmit}>
+            <div className="ps-4 pe-4">
+              <div className="post-field">
+                <textarea
+                  required
+                  placeholder="Write forum post here..."
+                  className="form-control"
+                  value={content}
+                  onChange={(e) => setContent(e.target.value)}
+                />
+              </div>
+            </div>
+            <Row>
+              <Col className="float-end ">
+                <div className="cancel-button">
+                  <button>Cancel</button>
+                </div>
+              </Col>
+              <Col className="float-end ">
+                <div className="post-button">
+                  <button type="submit">Post</button>
+                </div>
+              </Col>
+            </Row>
+          </form>
+        </Wrapper>
+      </Collapsible>
+    </div>
+  );
+};
 
-
-    return (
-        <div className="mt-3">
-            <Collapsible trigger="+">
-            <Wrapper>
-                <form>
-                    <div className="ps-4 pe-4">
-                        <div className="post-field">
-                            <textarea 
-                                required 
-                                placeholder="Write forum post here..." 
-                                className="form-control" 
-                            />
-                        </div>
-                    </div>
-                    <Row>
-                        <Col className="float-end ">
-                            <div className="cancel-button">
-                                <button>
-                                    Cancel
-                                </button>
-                            </div>
-                        </Col>
-                        <Col className="float-end ">
-                            <div className="post-button">
-                                <button>
-                                    Post
-                                </button>
-                            </div>
-                        </Col>
-                        
-                        
-                    </Row>
-                    
-                </form>
-            </Wrapper>
-        </Collapsible>
-        </div>
-        
-        
-    );
-}
-     
 const Wrapper = styled.section`
   margin-top: 1.5rem;
   max-width: 750px;
@@ -58,12 +69,12 @@ const Wrapper = styled.section`
 `;
 
 const Button = styled.button`
-  background:#F2831A ;
+  background: #f2831a;
   color: white;
   font-size: 1em;
   margin: 1em;
   padding: 0.25em 1em;
-  border: 2px solid #F2831A;
+  border: 2px solid #f2831a;
   border-radius: 10px;
 `;
 
