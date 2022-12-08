@@ -1,34 +1,34 @@
-import Card from "react-bootstrap/Card";
-// import Button from "react-bootstrap/Button";
-import { Link } from "react-router-dom";
+import axios from "axios";
 import styled from "styled-components";
-import Form from "react-bootstrap/Form";
+import useLocalState from "../utils/localState";
 import { useUserContext } from "../context/user_context";
-import { useEffect } from "react";
-
+import { PROD_ROOT } from "../url";
 const CreateTeam = () => {
-  const { group, setGroup } = useUserContext({
+  const GROUP_URL = "/api/v1/group";
+  const GROUP_ENDPOINT = `${PROD_ROOT}${GROUP_URL}`;
+  const { group, user, saveGroup } = useUserContext();
+  const { alert, showAlert, loading, setLoading, hideAlert } = useLocalState();
+  const [values, setValues] = useState({
     name: "",
     section: "",
     professor: "",
   });
   const handleChange = (e) => {
-    setGroup({ ...values, [e.target.name]: e.target.value });
+    setValues({ ...values, [e.target.name]: e.target.value });
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
     hideAlert();
     setLoading(true);
-    const { name, section, professor } = group;
     try {
-      const { data } = await axios.post(`${DEV_URL}`, loginUser);
+      const { data } = await axios.post(`${GROUP_ENDPOINT}`, values);
       setGroup({ name: "", section: "", professor: "" });
       showAlert({
         text: `Sucessfully create a group`,
         type: "success",
       });
       setLoading(false);
-      saveUser(data.user);
+      saveGroup(data.group);
       //redirect here when login
       if (numberOfGroups == 0) {
         navigate("/group");

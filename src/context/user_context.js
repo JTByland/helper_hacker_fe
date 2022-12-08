@@ -5,29 +5,13 @@ const UserContext = React.createContext();
 export const UserProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
   const DEV_URL = "/api/v1/auth";
-  const GROUP_URL = "/api/v1/group";
-  const PROD_URL = `${PROD_ROOT}${DEV_URL}`;
-  const GROUP_ENDPOINT = `${PROD_ROOT}${GROUP_URL}`;
   const [user, setUser] = useState(null);
   const [groups, setGroups] = useState({
     data: {},
     nb_groups: 0,
   });
-  // Group query
-  const createGroup = async (userInput) => {
-    try {
-      const { data } = await axios.post(`${GROUP_ENDPOINT}`, userInput);
-      setGroups(data);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-  const joinGroup = async (code) => {
-    try {
-      const { data } = await axios.post(`${GROUP_ENDPOINT}/joibs`, code);
-    } catch (e) {
-      console.log(e);
-    }
+  const saveGroup = (group) => {
+    setGroups(group);
   };
   const saveUser = (user) => {
     setUser(user);
@@ -68,8 +52,7 @@ export const UserProvider = ({ children }) => {
         forgotPassword,
         resetPassword,
         activeAccount,
-        createGroup,
-        joinGroup,
+        saveGroup,
       }}
     >
       {children}
