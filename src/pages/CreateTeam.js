@@ -16,30 +16,29 @@ const CreateTeam = () => {
     setValues({ ...values, [e.target.name]: e.target.value });
   };
   const handleSubmit = async (e) => {
-    // e.preventDefault();
-    // hideAlert();
-    // setLoading(true);
-    // const { email, password } = values;
-    // const loginUser = { email, password };
-    // try {
-    //   const { data } = await axios.post(`${DEV_URL}`, loginUser);
-    //   setValues({ name: "", email: "", password: "" });
-    //   showAlert({
-    //     text: `Welcome, ${data.user.name}. Redirecting to dashboard...`,
-    //     type: "success",
-    //   });
-    //   setLoading(false);
-    //   saveUser(data.user);
-    //   //redirect here when login
-    //   if (numberOfGroups == 0) {
-    //     navigate("/group");
-    //   } else {
-    //     navigate("/forum");
-    //   }
-    // } catch (error) {
-    //   showAlert({ text: error.response.data.msg });
-    //   setLoading(false);
-    // }
+    e.preventDefault();
+    hideAlert();
+    setLoading(true);
+    const { name, section, professor } = group;
+    try {
+      const { data } = await axios.post(`${DEV_URL}`, loginUser);
+      setValues({ name: "", email: "", password: "" });
+      showAlert({
+        text: `Welcome, ${data.user.name}. Redirecting to dashboard...`,
+        type: "success",
+      });
+      setLoading(false);
+      saveUser(data.user);
+      //redirect here when login
+      if (numberOfGroups == 0) {
+        navigate("/group");
+      } else {
+        navigate("/forum");
+      }
+    } catch (error) {
+      showAlert({ text: error.response.data.msg });
+      setLoading(false);
+    }
   };
   return (
     <Wrapper>
