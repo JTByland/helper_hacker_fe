@@ -105,10 +105,10 @@ const Forum = () => {
   const { groups, getAllGroups, getPostByGroupName, getAllPosts, posts } =
     useUserContext();
 
-  useEffect(() => {
-    getAllGroups();
-    getAllPosts();
-  }, []);
+  // useEffect(() => {
+  //   getAllGroups();
+  //   getAllPosts();
+  // }, []);
   const func = (groupName) => {
     setSelected(groupName);
   };
