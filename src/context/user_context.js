@@ -16,12 +16,9 @@ export const UserProvider = ({ children }) => {
   };
   const getPostByGroupName = async (group_name) => {
     try {
-      const { data } = await axios.post(
-        `${POST_URL}/getPostName`,
-        {
-          group_name,
-        }
-      );
+      const { data } = await axios.post(`${POST_URL}/getPostName`, {
+        group_name,
+      });
       console.log(data);
       savePost(data.posts);
     } catch (e) {
@@ -56,7 +53,7 @@ export const UserProvider = ({ children }) => {
   };
   const logout = async () => {
     try {
-      await axios.delete(`${DEV_URL}/logout`);
+      await axios.delete(`${PROD_ROOT}/api/v1/auth/logout`);
       removeUser();
     } catch (error) {
       console.log(error);
