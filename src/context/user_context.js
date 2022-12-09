@@ -38,7 +38,9 @@ export const UserProvider = ({ children }) => {
   };
   const getAllGroups = async () => {
     try {
-      const { data } = await axios.get(`${PROD_ROOT}${GROUP_URL}`);
+      const { data } = await axios.get(
+        `https://hub-project.onrender.com/api/v1/groups`
+      );
       saveGroup(data.groups);
     } catch (e) {
       console.log(e);
