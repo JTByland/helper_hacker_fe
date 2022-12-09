@@ -53,7 +53,7 @@ export const UserProvider = ({ children }) => {
   };
   const logout = async () => {
     try {
-      await axios.delete(`api/v1/logout`);
+      await axios.delete(`api/v1/auth/logout`);
       removeUser();
     } catch (error) {
       console.log(error);
