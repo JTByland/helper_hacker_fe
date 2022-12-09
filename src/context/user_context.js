@@ -17,11 +17,12 @@ export const UserProvider = ({ children }) => {
   const getPostByGroupName = async (group_name) => {
     try {
       const { data } = await axios.post(
-        `https://hub-project.onrender.com/getPostName`,
+        `${POST_URL}/getPostName`,
         {
           group_name,
         }
       );
+      console.log(data);
       savePost(data.posts);
     } catch (e) {
       console.log(e);

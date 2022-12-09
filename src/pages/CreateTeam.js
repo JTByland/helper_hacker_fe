@@ -19,7 +19,7 @@ const CreateTeam = () => {
     hideAlert();
     setLoading(true);
     try {
-      await axios.post(`${PROD_ROOT}${GROUP_URL}`, values);
+      await axios.post(`${GROUP_URL}`, values);
       setValues({ name: "", section: "", professor: "" });
       showAlert({
         text: `Sucessfully create a group`,

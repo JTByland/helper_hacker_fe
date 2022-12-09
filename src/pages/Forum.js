@@ -12,7 +12,10 @@ import "./styles.css";
 import { Link } from "react-router-dom";
 import { useUserContext } from "../context/user_context";
 import { useEffect } from "react";
-var groups = [
+import axios from "axios";
+
+
+var groups1 = [
   { groupname: "All Groups" },
   { groupname: "CS 2222" },
   { groupname: "Senior Project" },
@@ -22,7 +25,7 @@ var groups = [
   { groupname: "group 8" },
 ];
 
-var posts = [
+var posts1 = [
   {
     name: "Jeffrey Byland",
     username: "@jland",
@@ -101,25 +104,72 @@ var posts = [
 ];
 
 const Forum = () => {
+  const POST_URL = "/api/v1/posts";
+
   // Use groups for all the groups
-  const { groups, getAllGroups, getPostByGroupName, getAllPosts, posts } =
+  const [selected, setSelected] = useState("All Groups");
+  const { groups, getAllGroups } =
     useUserContext();
+  const [posts, setPosts] = useState(null);
+
+  const getPostByGroupName = async (group_name) => {
+    try {
+      const { data } = await axios.post(
+        `${POST_URL}/getPostName`,
+        {
+          group_name,
+        }
+      );
+      // console.log(data);
+      setPosts(data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const getAllPosts = async () => {
+    try {
+      const { data } = await axios.get(`/api/v1/posts`);
+      setPosts(data.posts);
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   useEffect(() => {
     getAllGroups();
     getAllPosts();
   }, []);
+
+  // useEffect(() => {
+  //   getPostByGroupName(selected);
+  // }, [selected]);
+
   const func = (groupName) => {
     setSelected(groupName);
+    getPostByGroupName(groupName);
   };
-  console.log(groups);
-  console.log(posts);
-  const [selected, setSelected] = useState("All Groups");
+
+
+  // console.log(groups);
+  // console.log(posts);
+  // const [selected, setSelected] = useState("All Groups");
+
+
+  if (groups == null) 
+    return <div>loading...</div>
+  if (posts == null) 
+    return <div>11loading...</div>
+  
   return (
     <div>
       {/* You need to pass the group name down to the PostBox */}
-      <PostBox group_name={"Team1"} />
-      {/* <div className="d-flex justify-content-center">
+      {/* <PostBox group_name={"Team1"} /> */}
+      <div className="d-flex justify-content-center">
+        
+        {/* <div>
+          {groups[0].name}
+        </div> */}
         <Container>
           <Row>
             <Col sm={5}>
@@ -130,8 +180,8 @@ const Forum = () => {
                 {groups.map((group, index) => (
                   <GroupCard
                     key={index}
-                    groupname={group.groupname}
-                    selected={group.groupname == selected}
+                    groupname={group.name}
+                    selected={group.name == selected}
                     func={func}
                   />
                 ))}
@@ -163,6 +213,7 @@ const Forum = () => {
               </Row>
             </Col>
             <Col sm={7}>
+              {/* <PostBox group_name={"Team1"} /> */}
               <div
                 className="pt-1 posts"
                 style={{
@@ -172,19 +223,19 @@ const Forum = () => {
                     "12px 0 10px -8px #d5d5d5, -12px 0 10px -8px #d5d5d5",
                 }}
               >
-                {selected != "All Groups" && <PostBox />}
+                {selected != "All Groups" && <PostBox group_name={selected}/>}
                 {posts.map((post, index) => (
                   <Post
                     key={index}
-                    name={post.name}
-                    username={post.username}
-                    message={post.message}
-                    date={post.date}
-                    image={post.image}
-                    numHearts={post.numHearts}
-                    numQuestions={post.numQuestions}
-                    numComments={post.numComments}
-                    comments={post.comments}
+                    name={post.author}
+                    username={post.author}
+                    message={post.content}
+                    date={post.createdAt}
+                    image={userIcon}
+                    numHearts={0}
+                    numQuestions={0}
+                    numComments={0}
+                    comments={[]}
                   />
                 ))}
               </div>
@@ -216,7 +267,7 @@ const Forum = () => {
             </div>
           </div>
         )}
-      </div> */}
+      </div>
     </div>
   );
 };

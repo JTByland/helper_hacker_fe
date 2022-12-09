@@ -9,7 +9,7 @@ import { useState } from "react";
 import { useUserContext } from "../context/user_context";
 
 const PostBox = ({ group_name }) => {
-  console.log(group_name);
+  // console.log(group_name);
   const POST_URL = "/api/v1/posts";
   const { user } = useUserContext();
   // Create a post method
@@ -29,6 +29,7 @@ const PostBox = ({ group_name }) => {
   };
   return (
     <div className="mt-3">
+      {/* <div>{group_name}</div> */}
       <Collapsible trigger="+">
         <Wrapper>
           <form onSubmit={handleSubmit}>
