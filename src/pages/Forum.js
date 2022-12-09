@@ -150,6 +150,9 @@ const Forum = () => {
     getPostByGroupName(groupName);
   };
 
+  const boxFunc = (groupName) => {
+    getPostByGroupName(groupName);
+  };
 
   // console.log(groups);
   // console.log(posts);
@@ -159,7 +162,7 @@ const Forum = () => {
   if (groups == null) 
     return <div>loading...</div>
   if (posts == null) 
-    return <div>11loading...</div>
+    return <div>loading...</div>
   
   return (
     <div>
@@ -175,9 +178,9 @@ const Forum = () => {
             <Col sm={5}>
               <div
                 className="group p-4"
-                style={{ maxHeight: "45rem", overflow: "auto" }}
+                style={{ minHeight: "45rem", maxHeight: "45rem", overflow: "auto" }}
               >
-                {groups.map((group, index) => (
+                {groups.slice(0).reverse().map((group, index) => (
                   <GroupCard
                     key={index}
                     groupname={group.name}
@@ -223,12 +226,12 @@ const Forum = () => {
                     "12px 0 10px -8px #d5d5d5, -12px 0 10px -8px #d5d5d5",
                 }}
               >
-                {selected != "All Groups" && <PostBox group_name={selected}/>}
-                {posts.map((post, index) => (
+                {selected != "All Groups" && <PostBox group_name={selected} func={boxFunc}/>}
+                {posts.slice(0).reverse().map((post, index) => (
                   <Post
                     key={index}
                     name={post.author}
-                    username={post.author}
+                    username={"@" + post.author}
                     message={post.content}
                     date={post.createdAt}
                     image={userIcon}

@@ -37,7 +37,7 @@ const CreateTeam = () => {
         <div className={`alert alert-${alert.type}`}>{alert.text}</div>
       )}
       <form className="container-lg " onSubmit={handleSubmit}>
-        <h3 className="text-center">Login</h3>
+        <h3 className="text-center">Create Group</h3>
         <div className="mb-3">
           <label>Group Name</label>
           <input

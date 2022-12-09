@@ -2,8 +2,10 @@ import styled from "styled-components";
 import { useLocation } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const AddCard = () => {
+  const navigate = useNavigate();
   const CARD_URL = "/api/v1/cards";
   const location = useLocation();
   const { groupName } = location.state; // use for axios post
@@ -22,6 +24,9 @@ const AddCard = () => {
         group_name: groupName,
       });
       // navigate back to the cards
+      
+      navigate("/flash-cards", {state: {groupName: groupName}});
+      
     } catch (e) {
       console.log(e);
     }

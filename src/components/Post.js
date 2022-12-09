@@ -29,7 +29,7 @@ const Post = ({
                         <Col sm={1} className="me-3">
                             <img src={image} style={{opacity: 0.65}} alt="" width={50}/>
                         </Col>
-                        <Col sm={3}>
+                        <Col sm={4}>
                             <Row className="float-start ">
                                 <div className="text-start" style={{color:'orange', marginLeft: '0px'}}>{ name }</div>
                                 <div className="text-start" style={{opacity:0.4, marginLeft: '0px'}}>{ username }</div>

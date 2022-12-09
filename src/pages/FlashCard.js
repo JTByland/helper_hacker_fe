@@ -108,73 +108,19 @@ const FlashCard = () => {
   const end = cards.length;
   const [i, setI] = useState(0);
   const [flip, setFlip] = useState(false);
+
+  if (cardsQuery == null) 
+    return <div>loading...</div>
+
+  // if ()
+
   return (
     <div className="d-flex justify-content-center">
-      <Container>
-        <Row>
-          <Col sm={7}>
-            <Card style={{ height: "75%" }}>
-              <Card.Body>
-                <Card.Title>{groupName} Flashcards</Card.Title>
-                <div className="d-flex align-items-center flex-column">
-                  <div className="cards">
-                    <div className="content">
-                      <div className="front">{cards[i].question}</div>
-                      <div className="back">
-                        <div className="back-content">{cards[i].answer}</div>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="d-flex justify-content-around">
-                    <div className="sml">
-                      <Button
-                        style={{ color: "#F2831A", background: "white" }}
-                        onClick={() => {
-                          setI(i - (i == 0 ? 0 : 1));
-                          setFlip(i < end - 1 && flip ? !flip : flip);
-                        }}
-                        primary
-                      >
-                        Prev
-                      </Button>
-                    </div>
-                    <div className="sml">
-                      <Button
-                        onClick={() => {
-                          setI(i + (i < end - 1 ? 1 : 0));
-                          setFlip(i < end - 1 && flip ? !flip : flip);
-                        }}
-                        primary
-                      >
-                        Next
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-                {/* <Card.Title>
-                  MAIN FLASHCARD
-                </Card.Title>{" "} */}
-
-                {/* <div style={ flip ? answer : question }>{flip ? cards[i].answer: cards[i].question}</div> */}
-              </Card.Body>
-            </Card>
-          </Col>
-
-          <Col sm={5}>
-            <div
-              className="m-1 overflow-auto card-list"
-              style={{ maxHeight: "35rem", overflow: "auto" }}
-            >
-              {cards.map((group, index) => (
-                <CardListItem
-                  key={index}
-                  groupname={group.question}
-                  number={index}
-                  func={func}
-                />
-              ))}
-            </div>
-            <Button primary>
+      {!cardsQuery.nb ? (
+        <div >
+          <div className="page d-flex justify-content-center m-5" style={{ fontSize: '40px'}} >There are no cards</div>
+          <div className="page d-flex justify-content-center m-5">
+            <Button primary className="page d-flex justify-content-center m-5">
               <Link
                 to="/add-card"
                 state={{ groupName: groupName }}
@@ -183,9 +129,90 @@ const FlashCard = () => {
                 Add Card
               </Link>
             </Button>
-          </Col>
-        </Row>
-      </Container>
+          </div>
+          
+        </div>
+       
+      ) : (
+        <Container>
+          {/* <div>{cardsQuery.cards}</div> */}
+          <Row>
+            <Col sm={7}>
+              <Card style={{ height: "75%" }}>
+                <Card.Body>
+                  <Card.Title>{groupName} Flashcards</Card.Title>
+                  <div className="d-flex align-items-center flex-column">
+                    <div className="cards">
+                      <div className="content">
+                        <div className="front">{cardsQuery.cards[i].question}</div>
+                        <div className="back">
+                          <div className="back-content">{cardsQuery.cards[i].answer}</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="d-flex justify-content-around">
+                      <div className="sml">
+                        <Button
+                          style={{ color: "#F2831A", background: "white" }}
+                          onClick={() => {
+                            setI(i - (i == 0 ? 0 : 1));
+                            setFlip(i < end - 1 && flip ? !flip : flip);
+                          }}
+                          primary
+                        >
+                          Prev
+                        </Button>
+                      </div>
+                      <div className="sml">
+                        <Button
+                          onClick={() => {
+                            setI(i + (i < end - 1 ? 1 : 0));
+                            setFlip(i < end - 1 && flip ? !flip : flip);
+                          }}
+                          primary
+                        >
+                          Next
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                  {/* <Card.Title>
+                    MAIN FLASHCARD
+                  </Card.Title>{" "} */}
+
+                  {/* <div style={ flip ? answer : question }>{flip ? cards[i].answer: cards[i].question}</div> */}
+                </Card.Body>
+              </Card>
+            </Col>
+
+            <Col sm={5}>
+              <div
+                className="m-1 overflow-auto card-list"
+                style={{ minHeight: "35rem", maxHeight: "35rem", overflow: "auto" }}
+              >
+                {cardsQuery.cards.map((card, index) => (
+                  <CardListItem
+                    key={index}
+                    groupname={card.question}
+                    number={index}
+                    func={func}
+                  />
+                ))}
+              </div>
+              <Button primary>
+                <Link
+                  to="/add-card"
+                  state={{ groupName: groupName }}
+                  style={{ color: "#FFFFFF", textDecoration: "none" }}
+                >
+                  Add Card
+                </Link>
+              </Button>
+            </Col>
+          </Row>
+        </Container>
+      )}
+
     </div>
   );
 };
