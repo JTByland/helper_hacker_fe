@@ -13,7 +13,7 @@ const JoinTeam = () => {
     hideAlert();
     setLoading(true);
     try {
-      const { data } = await axios.post(`${PROD_ROOT}${GROUP_URL}/joins`, {
+      const { data } = await axios.post(`${GROUP_URL}/joins`, {
         code: token,
       });
       setToken("");

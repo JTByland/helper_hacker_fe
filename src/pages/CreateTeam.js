@@ -19,7 +19,7 @@ const CreateTeam = () => {
     hideAlert();
     setLoading(true);
     try {
-      await axios.post(`${PROD_ROOT}${GROUP_URL}`, values);
+      await axios.post(`${GROUP_URL}`, values);
       setValues({ name: "", section: "", professor: "" });
       showAlert({
         text: `Sucessfully create a group`,
@@ -37,7 +37,7 @@ const CreateTeam = () => {
         <div className={`alert alert-${alert.type}`}>{alert.text}</div>
       )}
       <form className="container-lg " onSubmit={handleSubmit}>
-        <h3 className="text-center">Login</h3>
+        <h3 className="text-center">Create Group</h3>
         <div className="mb-3">
           <label>Group Name</label>
           <input
