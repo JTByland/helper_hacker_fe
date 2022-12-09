@@ -16,9 +16,12 @@ export const UserProvider = ({ children }) => {
   };
   const getPostByGroupName = async (group_name) => {
     try {
-      const { data } = await axios.post(`${PROD_ROOT}${POST_URL}/getPostName`, {
-        group_name,
-      });
+      const { data } = await axios.post(
+        `https://hub-project.onrender.com/getPostName`,
+        {
+          group_name,
+        }
+      );
       savePost(data.posts);
     } catch (e) {
       console.log(e);
@@ -26,7 +29,7 @@ export const UserProvider = ({ children }) => {
   };
   const getAllPosts = async () => {
     try {
-      const { data } = await axios.get(`${PROD_ROOT}${POST_URL}`);
+      const { data } = await axios.get(`/api/v1/posts`);
       savePost(data.posts);
     } catch (e) {
       console.log(e);
@@ -38,9 +41,7 @@ export const UserProvider = ({ children }) => {
   };
   const getAllGroups = async () => {
     try {
-      const { data } = await axios.get(
-        `https://hub-project.onrender.com/api/v1/groups`
-      );
+      const { data } = await axios.get(`${GROUP_URL}`);
       saveGroup(data.groups);
     } catch (e) {
       console.log(e);
@@ -54,7 +55,7 @@ export const UserProvider = ({ children }) => {
   };
   const logout = async () => {
     try {
-      await axios.delete(`${PROD_ROOT}${DEV_URL}/logout`);
+      await axios.delete(`${DEV_URL}/logout`);
       removeUser();
     } catch (error) {
       console.log(error);
@@ -63,19 +64,6 @@ export const UserProvider = ({ children }) => {
   const forgotPassword = async () => {};
   const resetPassword = async () => {};
   const activeAccount = async (info) => {};
-
-  const fetchUser = async () => {
-    try {
-      const { data } = await axios.get(`${PROD_ROOT}/api/v1/users/showMe`);
-      saveUser(data.user);
-    } catch (error) {
-      removeUser();
-    }
-    setIsLoading(false);
-  };
-  useEffect(() => {
-    fetchUser();
-  }, []);
   return (
     <UserContext.Provider
       value={{

@@ -105,10 +105,10 @@ const Forum = () => {
   const { groups, getAllGroups, getPostByGroupName, getAllPosts, posts } =
     useUserContext();
 
-  // useEffect(() => {
-  //   getAllGroups();
-  //   getAllPosts();
-  // }, []);
+  useEffect(() => {
+    getAllGroups();
+    getAllPosts();
+  }, []);
   const func = (groupName) => {
     setSelected(groupName);
   };
@@ -117,7 +117,8 @@ const Forum = () => {
   const [selected, setSelected] = useState("All Groups");
   return (
     <div>
-      <PostBox group_name={"group1"} />
+      {/* You need to pass the group name down to the PostBox */}
+      <PostBox group_name={"Team1"} />
       {/* <div className="d-flex justify-content-center">
         <Container>
           <Row>
